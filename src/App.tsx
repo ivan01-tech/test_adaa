@@ -1,35 +1,74 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import "./App.css";
+import { getProducts } from "./services/products";
+import TableRow from "./components/TableRow";
 
 function App() {
-  const [count, setCount] = useState(0)
+  // to store all the products
+  const [products, setProducts] = useState<Product[] | undefined>([]);
+
+  // a state to manage pagination of data
+  const [page, setPage] = useState(0);
+
+  // to fetch data went the page variable change
+  useEffect(
+    function () {
+      getProducts(page)
+        .then((res: ResponseTypeProducts) => {
+          setProducts(res.products);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    [page]
+  );
+
+  console.log("P : ", products);
 
   return (
-    <>
+    <div className="container">
+      <h1>Hello Adaa</h1>
+      {products && (
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Title</th>
+              <th scope="col">Descriprtion</th>
+              <th scope="col">Price</th>
+              <th scope="col">DiscountPercentage</th>
+              <th scope="col">Rating</th>
+              <th scope="col">Stock</th>
+              <th scope="col">Brand</th>
+              <th scope="col">Category</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((product) => {
+              return <TableRow product={product} />;
+            })}
+          </tbody>
+        </table>
+      )}
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+        <button
+          onClick={() => setPage((prev) => prev + 1)}
+          type="button"
+          className="btn btn-primary"
+        >
+          Prev
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <button
+          onClick={() => setPage((prev) => prev + 1)}
+          type="button"
+          className="btn btn-primary"
+        >
+          Next
+        </button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;

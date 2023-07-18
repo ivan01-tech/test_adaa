@@ -1,0 +1,25 @@
+.form {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.form input {
+  outline: none;
+  border: 1px solid gray;
+  background: whitesmoke;
+  border-radius: 5px;
+  flex: 1;
+  padding: 0.5rem;
+}
+.form input::placeholder{
+  color: gray;
+}
+
+.form button {
+  outline: none;
+  border: none;
+  background-color: royalblue;
+  color: white;
+  font-weight: bold;
+}

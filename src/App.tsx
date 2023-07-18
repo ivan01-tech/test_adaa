@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { getProducts } from "./services/products";
 import TableRow from "./components/TableRow";
+import SearchForm from "./components/SearchForm";
 
 function App() {
-  // to store all the products
+  // to store all  products
   const [products, setProducts] = useState<Product[] | undefined>([]);
 
   // a state to manage pagination of data
@@ -28,8 +29,13 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Hello Adaa</h1>
-      {products && (
+      <header className="header">
+        <h1>Adaa Test</h1>
+        <nav>
+          <SearchForm />
+        </nav>
+      </header>
+      {products ? (
         <table className="table">
           <thead>
             <tr>
@@ -50,8 +56,10 @@ function App() {
             })}
           </tbody>
         </table>
+      ) : (
+        <h2>Data Loading or Not Found!</h2>
       )}
-      <div>
+      <div className="stack">
         <button
           onClick={() => setPage((prev) => prev + 1)}
           type="button"

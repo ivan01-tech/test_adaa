@@ -2,10 +2,13 @@ import makeRequest from "../utils/makeRequest";
 /**
  * a function to get  products
  * @param page
+ * @param numberOfItem
  * @returns
  */
-export async function getProducts(page: number) {
-  return makeRequest(`/products?limit=10&skip=${5 * page}`, { method: "GET" })
+export async function getProducts(page: number, numberOfItem: number) {
+  return makeRequest(`/products?limit=${numberOfItem}&skip=${5 * page}`, {
+    method: "GET",
+  })
     .then((res: ResponseTypeProducts) => res)
     .catch((err) => err);
 }
